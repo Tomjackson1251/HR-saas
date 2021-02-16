@@ -1,5 +1,4 @@
 'use strict'
-/* eslint-disable */
 const path = require('path')
 const defaultSettings = require('./src/settings.js')
 
@@ -36,6 +35,16 @@ module.exports = {
     overlay: {
       warnings: false,
       errors: true
+    },
+    proxy: {
+      // 这里的api 表示如果我们的请求地址有/api的时候,就出触发代理机制
+      // localhost:8888/api/abc  => 代理给另一个服务器
+      // 本地的前端  =》 本地的后端  =》 代理我们向另一个服务器发请求 （行得通）
+      // 本地的前端  =》 另外一个服务器发请求 （跨域 行不通）
+      '/api': {
+        target: 'http://ihrm-java.itheima.net/', // 跨域请求的地址
+        changeOrigin: true
+      }
     }
     // before: require('./mock/mock-server.js')
   },
