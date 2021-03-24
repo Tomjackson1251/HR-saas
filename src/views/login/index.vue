@@ -132,6 +132,7 @@ export default {
         this.$refs.password.focus()
       })
     },
+    
     handleLogin() {
       this.$refs.loginForm.validate(async isOK => {
         if (isOK) {
