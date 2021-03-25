@@ -38,11 +38,11 @@ const actions = {
     setTimeStamp()
   },
 
-  async getUserInfo(context) {
-    const result = await getUserInfo() // 获取返回值
-    context.commit('setUserInfo', result) // 将整个的个人信息设置到用户的vuex数据中
-    return result // 这里为什么要返回 为后面埋下伏笔
-  },
+  //   async getUserInfo(context) {
+  //     const result = await getUserInfo() // 获取返回值
+  //     context.commit('setUserInfo', result) // 将整个的个人信息设置到用户的vuex数据中
+  //     return result // 这里为什么要返回 为后面埋下伏笔
+  //   },
 
   async getUserInfo(context) {
     const result = await getUserInfo() // result就是用户的基本资料
