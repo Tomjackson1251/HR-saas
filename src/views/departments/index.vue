@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-container">
+  <div v-loading="loading" class="dashboard-container">
     <div class="app-container">
       <!-- 实现页面的基本布局 -->
       <el-card class="tree-card">
@@ -16,11 +16,17 @@
             :tree-node="data"
             @delDepts="getDepartments"
             @addDepts="addDepts"
+            @editDepts="editDepts"
           />
         </el-tree>
       </el-card>
     </div>
-    <AddDept :show-dialog="showDialog" />
+    <add-dept
+      ref="addDept"
+      :show-dialog.sync="showDialog"
+      :tree-node="node"
+      @addDepts="getDepartments"
+    />
   </div>
 </template>
 
@@ -42,7 +48,8 @@ export default {
         label: 'name' // 表示 从这个属性显示内容
       },
       showDialog: false,
-      node: null
+      node: null,
+      loading: false
     }
   },
   created() {
@@ -50,14 +57,22 @@ export default {
   },
   methods: {
     async getDepartments() {
+      this.loading = true
       const result = await getDepartments()
-      this.company = { name: result.companyName, manager: '负责人' }
+      this.company = { name: result.companyName, manager: '负责人', id: '' }
       this.departs = tranListToTreeData(result.depts, '') // 需要将其转化成树形结构
       //   console.log(result.depts)
+      this.loading = false
     },
     addDepts(node) {
       this.showDialog = true
       this.node = node
+    },
+    editDepts(node) {
+      this.showDialog = true
+      this.node = node
+      //   console.log(this.$refs.addDept)
+      this.$refs.addDept.getDepartDetail(node.id)
     }
   }
 }

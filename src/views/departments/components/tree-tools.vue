@@ -56,6 +56,7 @@ export default {
       if (type === 'add') {
         this.$emit('addDepts', this.treeNode)
       } else if (type === 'edit') {
+        this.$emit('editDepts', this.treeNode)
       } else {
         this.$confirm('您确定要删除该组织部门吗？')
           .then(() => {
@@ -63,7 +64,7 @@ export default {
           })
           .then(() => {
             this.$emit('delDepts')
-            this.$message('删除部门成功！')
+            this.$message({ message: '删除部门成功！', type: 'success' })
           })
       }
     }
